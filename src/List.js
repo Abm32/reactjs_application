@@ -36,6 +36,7 @@ function ShowList() {
 
   return (
     <div className="container">
+      <h1 className="main-heading d-flex justify-content-center mt-5 mb-5">Movies</h1> {/* Main heading */}
       <div className="row">
         {shows.map(show => (
           <div className="col-md-4 mb-4" key={show.show.id}>
