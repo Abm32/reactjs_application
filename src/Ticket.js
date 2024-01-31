@@ -15,11 +15,11 @@ function TicketForm({ showName }) {
   return (
     <form onSubmit={handleSubmit}>
       <h2 className="text-center">Book a ticket for {showName}</h2>
-      <div className="form-group">
+      <div className="form-group mb-3">
         <label>Name:</label>
         <input type="text" className="form-control" value={name} onChange={e => setName(e.target.value)} required />
       </div>
-      <div className="form-group">
+      <div className="form-group mb-3">
         <label>Email:</label>
         <input type="email" className="form-control" value={email} onChange={e => setEmail(e.target.value)} required />
       </div>
