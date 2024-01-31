@@ -1,6 +1,7 @@
 // ShowList.js
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import './list.css';
 
 function ShowList() {
   const [shows, setShows] = useState([]);
@@ -35,13 +36,21 @@ function ShowList() {
   }
 
   return (
-    <div>
-      {shows.map(show => (
-        <div key={show.show.id}>
-          <h2>{show.show.name}</h2>
-          <Link to={`/show/${show.show.id}`}>See Details</Link>
-        </div>
-      ))}
+    <div className="container">
+      <div className="row">
+        {shows.map(show => (
+          <div className="col-md-4 mb-4" key={show.show.id}>
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">{show.show.name}</h5>
+                <Link to={`/show/${show.show.id}`} className="btn btn-primary">
+                  See Details
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
