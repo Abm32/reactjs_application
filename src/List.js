@@ -2,14 +2,37 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function List() {
+function ShowList() {
   const [shows, setShows] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch('https://api.tvmaze.com/search/shows?q=all')
-      .then(response => response.json())
-      .then(data => setShows(data));
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Something went wrong ...');
+        }
+      })
+      .then(data => {
+        setShows(data);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        setError(error);
+        setIsLoading(false);
+      });
   }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div>
@@ -23,4 +46,4 @@ function List() {
   );
 }
 
-export default List;
+export default ShowList;
