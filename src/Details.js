@@ -39,9 +39,14 @@ function ShowDetails() {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-md-8 offset-md-2">
+        <div className="col-md-8 offset-md-2 mt-5">
           <h2>{show.name}</h2>
           <p dangerouslySetInnerHTML={{ __html: show.summary }}></p>
+          <p><b>Genre:</b> {show.genres.join(', ')}</p>
+          <p><b>Runtime:</b> {show.runtime} minutes</p>
+          <p><b>Language:</b> {show.language}</p>
+          <p><b>Premiered:</b> {show.premiered}</p>
+          <p><b>Ended:</b> {show.ended}</p>
           <TicketForm showName={show.name} />
         </div>
       </div>
