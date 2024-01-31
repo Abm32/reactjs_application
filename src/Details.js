@@ -37,10 +37,14 @@ function ShowDetails() {
   }
 
   return (
-    <div>
-      <h2>{show.name}</h2>
-      <p>{show.summary}</p>
-      <TicketForm showName={show.name} />
+    <div className="container">
+      <div className="row">
+        <div className="col-md-8 offset-md-2">
+          <h2>{show.name}</h2>
+          <p dangerouslySetInnerHTML={{ __html: show.summary }}></p>
+          <TicketForm showName={show.name} />
+        </div>
+      </div>
     </div>
   );
 }
