@@ -8,7 +8,7 @@ function ShowList() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://www.omdbapi.com/?s=all&apikey=d6b2c01a')
+    fetch('https://cors-anywhere.herokuapp.com/http://www.omdbapi.com/?s=all&apikey=d6b2c01a')
       .then(response => {
         if (response.ok) {
           return response.json();
