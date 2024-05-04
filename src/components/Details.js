@@ -1,16 +1,14 @@
-// ShowDetails.js
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import TicketForm from './Ticket';
+import { Link } from 'react-router-dom';
+import './list.css';
 
-function ShowDetails() {
-  const { id } = useParams();
-  const [show, setShow] = useState(null);
+function ShowList() {
+  const [shows, setShows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`https://api.tvmaze.com/shows/${id}`)
+    fetch('http://www.omdbapi.com/?s=all&apikey=d6b2c01a') // Modified URL
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -19,14 +17,14 @@ function ShowDetails() {
         }
       })
       .then(data => {
-        setShow(data);
+        setShows(data.Search);
         setIsLoading(false);
       })
       .catch(error => {
         setError(error);
         setIsLoading(false);
       });
-  }, [id]);
+  }, []);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -38,20 +36,28 @@ function ShowDetails() {
 
   return (
     <div className="container">
+      <h1 className="main-heading d-flex justify-content-center mt-5 mb-5">Movies</h1> {/* Main heading */}
       <div className="row">
-        <div className="col-md-8 offset-md-2 mt-5">
-          <h2>{show.name}</h2>
-          <p dangerouslySetInnerHTML={{ __html: show.summary }}></p>
-          <p><b>Genre:</b> {show.genres.join(', ')}</p>
-          <p><b>Runtime:</b> {show.runtime} minutes</p>
-          <p><b>Language:</b> {show.language}</p>
-          <p><b>Premiered:</b> {show.premiered}</p>
-          <p><b>Ended:</b> {show.ended}</p>
-          <TicketForm showName={show.name} />
-        </div>
+        {shows.map(show => (
+          <div className="col-md-4 mb-4" key={show.imdbID}>
+            <div className="card">
+                {show.Poster !== 'N/A' ? (
+                    <img src={show.Poster} className="card-img-top" alt={show.Title} />
+                ) : (
+                    <img src="https://via.placeholder.com/210x295" className="card-img-top" alt="Placeholder" />
+                )}
+              <div className="card-body">
+                <h5 className="card-title">{show.Title}</h5>
+                <Link to={`/show/${show.imdbID}`} className="btn btn-primary">
+                  See Details
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
-export default ShowDetails;
+export default ShowList;

@@ -8,7 +8,7 @@ function ShowList() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('https://api.tvmaze.com/search/shows?q=all')
+    fetch('http://www.omdbapi.com/?s=all&apikey=d6b2c01a')
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -17,7 +17,7 @@ function ShowList() {
         }
       })
       .then(data => {
-        setShows(data);
+        setShows(data.Search);
         setIsLoading(false);
       })
       .catch(error => {
@@ -39,16 +39,16 @@ function ShowList() {
       <h1 className="main-heading d-flex justify-content-center mt-5 mb-5">Movies</h1> {/* Main heading */}
       <div className="row">
         {shows.map(show => (
-          <div className="col-md-4 mb-4" key={show.show.id}>
+          <div className="col-md-4 mb-4" key={show.imdbID}>
             <div className="card">
-                {show.show.image ? (
-                    <img src={show.show.image.medium} className="card-img-top" alt={show.show.name} />
+                {show.Poster !== 'N/A' ? (
+                    <img src={show.Poster} className="card-img-top" alt={show.Title} />
                 ) : (
                     <img src="https://via.placeholder.com/210x295" className="card-img-top" alt="Placeholder" />
                 )}
               <div className="card-body">
-                <h5 className="card-title">{show.show.name}</h5>
-                <Link to={`/show/${show.show.id}`} className="btn btn-primary">
+                <h5 className="card-title">{show.Title}</h5>
+                <Link to={`/show/${show.imdbID}`} className="btn btn-primary">
                   See Details
                 </Link>
               </div>
